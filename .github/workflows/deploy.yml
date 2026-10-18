@@ -1,0 +1,51 @@
+name: Deploy Worker
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Deploy to Cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ADMIN_ID: ${{ secrets.ADMIN_ID }}
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          GROUP_ID: ${{ secrets.GROUP_ID }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+          CHANNEL_URL: ${{ secrets.CHANNEL_URL }}
+          FREE_DAILY_LIMIT: ${{ secrets.FREE_DAILY_LIMIT }}
+          COOLDOWN_MS: ${{ secrets.COOLDOWN_MS }}
+          DONATION_QRIS_URL: ${{ secrets.DONATION_QRIS_URL }}
+          BATCH_SIZE: ${{ secrets.BATCH_SIZE }}
+          WEBHOOK_PATH: ${{ secrets.WEBHOOK_PATH }}
+        run: |
+          npx wrangler deploy \
+            --var "ADMIN_ID:${ADMIN_ID}" \
+            --var "ADMIN_USERNAME:${ADMIN_USERNAME}" \
+            --var "GROUP_ID:${GROUP_ID}" \
+            --var "CHANNEL_ID:${CHANNEL_ID}" \
+            --var "CHANNEL_URL:${CHANNEL_URL}" \
+            --var "FREE_DAILY_LIMIT:${FREE_DAILY_LIMIT}" \
+            --var "COOLDOWN_MS:${COOLDOWN_MS}" \
+            --var "DONATION_QRIS_URL:${DONATION_QRIS_URL}" \
+            --var "BATCH_SIZE:${BATCH_SIZE:-40}" \
+            --var "WEBHOOK_PATH:${WEBHOOK_PATH:-/webhook}"

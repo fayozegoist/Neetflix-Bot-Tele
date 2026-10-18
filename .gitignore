@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+.dev.vars
+*.log
+src/
+scripts/
+tsconfig.json
+tsconfig.build.json
