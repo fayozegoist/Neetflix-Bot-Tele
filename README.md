@@ -110,10 +110,6 @@ Detail format input yang didukung: lihat [ADMIN.md](./ADMIN.md).
 - **KV** — 100.000 read/hari, 1.000 write/hari, 1.000 delete/hari, 1.000 list/hari.
 - **100.000 request/hari** termasuk cron — cron tiap 30 menit hanya ±48/hari.
 
-## Pengembangan
-
-Source `src/` dan pipeline build/obfuscate (`scripts/obfuscate.mjs`, `tsconfig.build.json`) tidak dimuat di repo publik. Rebuild dilakukan dari salinan source pribadi:
-
 ```
 npm i
 npm run typecheck                    # pemeriksaan tipe TypeScript
