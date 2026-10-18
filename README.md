@@ -27,8 +27,6 @@ dist/
     └── callback.js   # handler callback (vault_, random_, verify_join)
 ```
 
-Teknik obfuscation: string-array base64 + rotasi, control-flow flattening, unicode escape.
-
 ## Fitur
 
 - 🔑 Generate Token manual (`/gen [teks/id]`) & 🎲 Generate Random per region
@@ -84,8 +82,6 @@ Teknik obfuscation: string-array base64 + rotasi, control-flow flattening, unico
    https://<nama-worker>.workers.dev/setwebhook?key=<SECRET_TOKEN>
    ```
 
-> Jika sebelumnya bot live di Cloudflare Pages, hapus project Pages lama — hanya boleh ada 1 webhook aktif untuk token yang sama.
-
 ## Cron (validasi otomatis)
 
 `wrangler.toml` → `[triggers] crons = ["*/30 * * * *"]` — tiap 30 menit bot memvalidasi `BATCH_SIZE` akun. Seluruh vault tersapu setiap `ceil(N / BATCH_SIZE) × 30` menit. Atur `BATCH_SIZE` (maksimal ~45) sesuai ukuran vault agar tidak melewati batas 50 subrequest.
@@ -109,6 +105,7 @@ Detail format input yang didukung: lihat [ADMIN.md](./ADMIN.md).
 - **50 subrequest/request** — generate/acak/konversi dibatasi per-batch; validasi & broadcast memakai cursor KV; validasi dan broadcast tidak dijalankan pada run cron yang sama.
 - **KV** — 100.000 read/hari, 1.000 write/hari, 1.000 delete/hari, 1.000 list/hari.
 - **100.000 request/hari** termasuk cron — cron tiap 30 menit hanya ±48/hari.
+  
 
 ```
 npm i
