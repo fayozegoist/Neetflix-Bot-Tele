@@ -2,8 +2,6 @@
 
 Bot Telegram generator Token Auto-Login Netflix. Dikembangkan dengan TypeScript multi-module dan dijalankan di Cloudflare Workers (free plan).
 
-> Repo ini memuat **hasil build ter-obfuscate** (`dist/`). Source code asli tidak dipublikasikan; seluruh modul di-obfuscate pada tahap build lokal, dengan pengecualian `donation.js` yang sengaja dibiarkan terbaca.
-
 ## Struktur Build
 
 ```
